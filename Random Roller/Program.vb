@@ -14,13 +14,13 @@ Module Program
         End Select
     End Sub
 
-    Private Sub CoinFlip()
+    Private Sub DiceRoll()
         Dim randomSeed As New Random()
         Dim randomValue As Integer = randomSeed.Next(0, 6) + 1
         Console.WriteLine($"You rolled a {randomValue}.")
     End Sub
     
-    Private Sub DiceRoll()
+    Private Sub CoinFlip()
         Dim randomFlip As Integer = New Random().Next(0, 2) + 1
         If randomFlip = 1 Then
             Console.WriteLine("You rolled heads.")
