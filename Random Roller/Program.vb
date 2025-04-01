@@ -2,15 +2,44 @@ Imports System
 
 Module Program
     
-    Dim ReadOnly Modes As Object() = {"Roll a dice", "Flip a coin"}
+    Dim ReadOnly Modes As Object() = {"Roll a dice", "Flip a coin", "Custom range"}
     
     Private Sub RunMode(selection As Integer)
         'Use user selection to call intended subroutine.
         Select Case selection
-            Case 1
-                DiceRoll()
-            Case 2
-                CoinFlip()
+            Case 1 'Dice Roll
+                Dim randomValue As Integer = RandomInt(1, 6)
+                Console.WriteLine($"You rolled a {randomValue}.")
+            Case 2 'Coin Flip
+                Dim randomFlip As Integer = RandomInt(1, 2)
+                If randomFlip = 1 Then
+                    Console.WriteLine("You rolled heads.")
+                Else
+                    Console.WriteLine("You rolled tails.")
+                End If
+            Case 3 'Custom range
+                Dim lowerBound As Integer
+                Dim upperBound As Integer
+                Dim sanityChecked = False
+                Do
+                    Console.Write("Enter lower bound: ")
+                    If Integer.TryParse(Console.ReadLine(), lowerBound) Then
+                        Console.Write("Enter upper bound: ")
+                        If Integer.TryParse(Console.ReadLine(), upperBound) Then
+                            If lowerBound < upperBound Then
+                                'All inputs have been confirmed
+                                sanityChecked = True
+                            End If
+                        End If
+                    End If
+                    If sanityChecked = False And lowerBound > upperBound Then
+                        Console.WriteLine("The lower bound must be smaller than the upper bound.")
+                    Else If sanityChecked = False Then
+                        Console.WriteLine("Please enter an integer.")
+                    End If
+                Loop Until sanityChecked = True
+                dim randomValue As Integer = RandomInt(lowerBound, upperBound)
+                Console.WriteLine($"Your number is {randomValue}.")
         End Select
     End Sub
     
@@ -19,20 +48,6 @@ Module Program
         Dim randomValue As Integer = randomSeed.Next(lowerBound - 1, upperBound) + 1 'Adjust for weird random values
         Return randomValue
     End Function
-
-    Private Sub DiceRoll()
-        Dim randomValue As Integer = RandomInt(1, 6)
-        Console.WriteLine($"You rolled a {randomValue}.")
-    End Sub
-    
-    Private Sub CoinFlip()
-        Dim randomFlip As Integer = RandomInt(1, 2)
-        If randomFlip = 1 Then
-            Console.WriteLine("You rolled heads.")
-        Else
-            Console.WriteLine("You rolled tails.")
-        End If
-    End Sub
     
     Sub Main(args As String())
         'Display the options from the _mode array.
