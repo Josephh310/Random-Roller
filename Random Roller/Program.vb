@@ -13,15 +13,20 @@ Module Program
                 CoinFlip()
         End Select
     End Sub
+    
+    Private Function RandomInt(lowerBound As Integer, upperBound As Integer) As Integer
+        Dim randomSeed As New Random() 'Generate a new 'random seed'
+        Dim randomValue As Integer = randomSeed.Next(lowerBound - 1, upperBound) + 1 'Adjust for weird random values
+        Return randomValue
+    End Function
 
     Private Sub DiceRoll()
-        Dim randomSeed As New Random()
-        Dim randomValue As Integer = randomSeed.Next(0, 6) + 1
+        Dim randomValue As Integer = RandomInt(1, 6)
         Console.WriteLine($"You rolled a {randomValue}.")
     End Sub
     
     Private Sub CoinFlip()
-        Dim randomFlip As Integer = New Random().Next(0, 2) + 1
+        Dim randomFlip As Integer = RandomInt(1, 2)
         If randomFlip = 1 Then
             Console.WriteLine("You rolled heads.")
         Else
